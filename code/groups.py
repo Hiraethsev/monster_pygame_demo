@@ -18,8 +18,8 @@ class AllSprites(pygame.sprite.Group):
 		self.offset.y = -(player.rect.centery - 720 / 2)
 
 		bg_sprites = [sprite for sprite in self if sprite.z < Layer_Z_Index['main']]
-		# 按 y_sort 排序，以确保正确的渲染顺序（从上到下）。
-		main_sprites = sorted([sprite for sprite in self if sprite.z == Layer_Z_Index['main']], key = lambda sprite: sprite.y_sort)
+		# 按 y_order 排序，以确保正确的渲染顺序（从上到下）。
+		main_sprites = sorted([sprite for sprite in self if sprite.z == Layer_Z_Index['main']], key = lambda sprite: sprite.y_order)
 		fg_sprites = [sprite for sprite in self if sprite.z > Layer_Z_Index['main']]
 
 		for layer in (bg_sprites, main_sprites, fg_sprites):
@@ -55,7 +55,7 @@ class BattleSprites(pygame.sprite.Group):
 			for sprite in sorted(self, key=lambda sprite: sprite.z):
 				self.display_surface.blit(sprite.image, sprite.rect)
 
-				if sprite.z == BATTLE_LAYERS['name']:
+				if sprite.z == Battle_Drawing_Layers['name']:
 					if (sprite.monster_sprite == current_sprite or sprite.monster_sprite == monster_sprite):
 						if sprite.monster_sprite.entity == 'player':
 							sprite.col = COLORS['light-yellow']
@@ -64,7 +64,7 @@ class BattleSprites(pygame.sprite.Group):
 					else:
 						sprite.col = COLORS['black']
 
-				if sprite.z == BATTLE_LAYERS['overlay'] and hasattr(sprite, "monster_sprite"):
+				if sprite.z == Battle_Drawing_Layers['layer'] and hasattr(sprite, "monster_sprite"):
 					if sprite.monster_sprite.entity == 'player':
 						if sprite.monster_sprite == current_sprite:
 							sprite.col = '#f5eac1'

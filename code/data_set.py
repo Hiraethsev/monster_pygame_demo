@@ -52,11 +52,10 @@ BattleMosterPos = {
 	'right': {'top': (900, 110), 'center': (1110, 270), 'bottom': (900, 390)}
 }
 
-BATTLE_LAYERS =  {
+Battle_Drawing_Layers =  {
 	'name': 1,
-	'monster': 2,
-	'effects': 3,
-	'overlay': 4
+	'monster-display': 2,
+	'layer': 3
 }
 
 BattleChoice = {
@@ -93,7 +92,7 @@ Monster_Frames = {
 }
 
 
-Bg_Frames = load_images_from_folder('..', 'graphics', 'backgrounds',status='dict')
+Background_Frames = load_images_from_folder('..', 'graphics', 'backgrounds',status='dict')
 Start_Animation_Frames = load_images_from_folder('..', 'graphics', 'other', 'star animation',status='order')
 
 

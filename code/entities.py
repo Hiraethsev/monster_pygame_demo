@@ -28,7 +28,7 @@ class Entity(pygame.sprite.Sprite):
 		self.hitbox = self.rect.inflate(-self.rect.width / 2, -60)
 
 		# 垂直排序，决定实体的渲染顺序
-		self.y_sort = self.rect.centery
+		self.y_order = self.rect.centery
 
 	def animate(self, dt):
 		self.frame_index += 6* dt
@@ -48,7 +48,7 @@ class Entity(pygame.sprite.Sprite):
 	def change_facing_direction(self, target_pos):
 		relation = vector(target_pos) - vector(self.rect.center)
 		# 检测近似在一个水平轴上还是在一个竖直轴上
-		if abs(relation.y) < 30:
+		if abs(relation.y) < 20:
 			self.facing_direction = 'right' if relation.x > 0 else 'left'
 		else:
 			self.facing_direction = 'down' if relation.y > 0 else 'up'
@@ -172,7 +172,7 @@ class Player(Entity):
 					self.rect.centery = self.hitbox.centery
 
 	def update(self, dt):
-		self.y_sort = self.rect.centery
+		self.y_order = self.rect.centery
 		if not self.blocked:
 			self.input()
 			self.move(dt)

@@ -170,7 +170,7 @@ class Battle:
 							monster_sprite.delayed_kill(None)
 							self.update_all_monsters('continue')
 						else:
-							TimedSprite(monster_sprite.rect.center, self.monster_frames['ui']['cross'], self.battle_sprites, 1000)
+							DisplayShortSprite(monster_sprite.rect.center, self.monster_frames['ui']['cross'], self.battle_sprites, 1000)
 
 				# 如果选择模式是攻击，更新选择模式为目标，并设置当前选择的攻击技能和目标。
 				if self.selection_mode == 'attack':
@@ -391,7 +391,7 @@ class Battle:
 	def draw_general(self):
 		self.update_text('general')
 		#根据当前的选择状态，显示不同的图标高亮
-		for index, (option, data_dict) in enumerate(BattleChoice.items()):
+		for index, (_, data_dict) in enumerate(BattleChoice.items()):
 			if index == self.indexes['general']:
 				surf = self.monster_frames['ui'][f"{data_dict['icon']}_highlight"]
 			else:

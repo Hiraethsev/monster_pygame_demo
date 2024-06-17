@@ -19,7 +19,7 @@ class MonsterSprite(pygame.sprite.Sprite):
 		self.frame_index, self.frames, self.state = 0, frames, 'idle'
 		self.animation_speed = 6+ uniform(-1, 1)
 
-		self.z = BATTLE_LAYERS['monster']
+		self.z = Battle_Drawing_Layers['monster-display']
 
 		# 是否高亮显示
 		self.highlight = False
@@ -93,7 +93,7 @@ class MonsterSprite(pygame.sprite.Sprite):
 
 class AttackSprite(AnimatedSprite):
 	def __init__(self, pos, frames, groups):
-		super().__init__(pos, frames, groups, BATTLE_LAYERS['overlay'])
+		super().__init__(pos, frames, groups, Battle_Drawing_Layers['layer'])
 		self.rect.center = pos
 
 	def animate(self, dt):
@@ -107,10 +107,10 @@ class AttackSprite(AnimatedSprite):
 		self.animate(dt)
 
 
-class TimedSprite(Sprite):
-	def __init__(self, pos, surf, groups, duration):
-		super().__init__(pos, surf, groups, z = BATTLE_LAYERS['overlay'])
-		self.rect.center = pos
+class DisplayShortSprite(Sprite):
+	def __init__(self, position, surface, groups, duration):
+		super().__init__(position, surface, groups, z = Battle_Drawing_Layers['layer'])
+		self.rect.center = position
 		self.death_timer = Timer(duration, autostart = True, func = self.kill)
 
 	def update(self, _):
@@ -121,7 +121,7 @@ class MonsterNameSprite(pygame.sprite.Sprite):
 		super().__init__(groups)
 
 		self.monster_sprite = monster_sprite
-		self.z = BATTLE_LAYERS['name']
+		self.z = Battle_Drawing_Layers['name']
 		self.col = COLORS['black']
 		self.font = font
 		self.pos = pos
@@ -153,7 +153,7 @@ class MonsterLevelSprite(pygame.sprite.Sprite):
     super().__init__(groups)
     self.monster_sprite=monster_sprite
     self.font=font
-    self.z = BATTLE_LAYERS['name']
+    self.z = Battle_Drawing_Layers['name']
     self.col=COLORS['black']
 
     self.image=pygame.Surface((60,26),flags=pygame.SRCALPHA)
@@ -181,7 +181,7 @@ class MonsterStatsSprite(pygame.sprite.Sprite):
         super().__init__(groups)
 
         self.monster_sprite=monster_sprite
-        self.z = BATTLE_LAYERS['overlay']
+        self.z = Battle_Drawing_Layers['layer']
         self.col=COLORS['white']
 
         self.image = pygame.Surface(size,flags=pygame.SRCALPHA)
@@ -195,7 +195,8 @@ class MonsterStatsSprite(pygame.sprite.Sprite):
         self.image.fill(self.col)
         for index, (value, max_value) in enumerate(self.monster_sprite.monster.get_info()):
             color = (COLORS['red'], COLORS['blue'], COLORS['gray'])[index]
-            if index < 2:  # health and energy
+            if index < 2:  
+								# health and energy
                 text_surf = self.font.render(f'{int(value)}/{max_value}', False, COLORS['black'])
                 text_rect = text_surf.get_frect(topleft=(self.rect.width * 0.05, index * self.rect.height / 2))
                 bar_rect = pygame.FRect(text_rect.bottomleft + vector(0, -2), (self.rect.width * 0.9, 4))

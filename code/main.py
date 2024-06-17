@@ -38,7 +38,7 @@ class Game:
 		self.monster_frames = Monster_Frames
 
 
-		self.bg_frames = Bg_Frames
+		self.bg_frames = Background_Frames
 		# 加载开始动画帧数据
 		self.start_animation_frames = Start_Animation_Frames
 		
