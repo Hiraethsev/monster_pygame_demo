@@ -1,40 +1,92 @@
-from random import randint
+from data_import import *
+from timer import Timer
 
-from support import *
+def update_player_monster():
+	Player_Monsters={}
+	for key in Player_Monsters_Dict.keys():
+		name=Player_Monsters_Dict[key][0]
+		level = Player_Monsters_Dict[key][1]
+		xp = Player_Monsters_Dict[key][2]
 
-Monster_Data = import_data_json('..', 'data', 'game_data', 'MONSTER_DATA.json')
+		ele=Monster(name,level,xp)
+		if ele.update_xp(0):
+			Player_Monsters_Dict[key][1]=ele.level
+			Player_Monsters_Dict[key][2] = ele.xp
 
-Attack_Data = import_data_json('..', 'data', 'game_data', 'ATTACK_DATA.json')
+		Player_Monsters[key]=ele
 
+	return Player_Monsters
 
 class Monster:
-    def __init__(self, name, level, monster_data=Monster_Data):
-        self.name, self.level = name, level
+	def __init__(self, name, level,xp=0):
+		self.name, self.level = name, level
 
-        # stats
-        self.element = monster_data[name]['stats']['element']
-        self.base_stats = monster_data[name]['stats']
-        self.abilities = monster_data[name]['abilities']
+		# stats 
+		self.element = Monster_Data[name]['stats']['element']
+		self.base_stats = Monster_Data[name]['stats']
+		self.status= {
+			'max_health': self.base_stats['max_health'] * self.level,
+			'max_energy': self.base_stats['max_health'] * self.level,
+			'attack': self.base_stats['attack'] * self.level,
+			'defense': self.base_stats['defense'] * self.level,
+			'speed': self.base_stats['speed'],
+			'recovery': self.base_stats['recovery'] * self.level,
+		}
+		self.current_health=self.status['max_health']
+		self.current_energy=self.status['max_energy']
 
-        self.energy = max(0, self.base_stats['max_energy'] * self.level - randint(0, 200))
-        self.health = max(0, self.base_stats['max_health'] * self.level - randint(0, 200))
+		self.preparation = 0
+		self.abilities = Monster_Data[name]['abilities']
+		self.paused = False
+		self.defending = False
 
-        # xp
-        self.level_up = self.level * 50
-        self.xp = randint(0, self.level_up)
+		# experience
+		self.xp = xp
+		self.level_up = self.level * 150
+		self.evolution = Monster_Data[name]['evolve']
 
-    def get_stat(self, stat):
-        return self.base_stats[stat] * self.level
+		# energy timer
+		self.energy_timer = Timer(5000, repeat=True, autostart=True, func=self.increase_energy)
 
-    def get_stats(self):
-        return {
-            'health': self.get_stat('max_health'),
-            'energy': self.get_stat('max_energy'),
-            'attack': self.get_stat('attack'),
-            'defense': self.get_stat('defense'),
-            'speed': self.get_stat('speed'),
-            'recovery': self.get_stat('recovery'),
-        }
+	def increase_energy(self):
+		self.current_energy = min(self.current_energy + 50, self.status['max_energy'])
 
-    def get_abilities(self):
-        return [ability for lvl, ability in self.abilities.items() if self.level >= int(lvl)]
+
+	def get_abilities(self, all  = True):
+		if all:
+			return [ability for lvl, ability in self.abilities.items() if self.level >= int(lvl)]
+		else:
+			return [ability for lvl, ability in self.abilities.items() if self.level >= int(lvl) and Attack_Data[ability]['cost'] < self.current_energy]
+
+	def get_info(self):
+		return (
+			(self.current_health, self.status['max_health']),
+			(self.current_energy, self.status['max_energy']),
+			(self.preparation, 100)
+			)
+
+	def reduce_energy(self, attack):
+		self.current_energy -= Attack_Data[attack]['cost']
+
+	def get_base_damage(self, attack):
+		return self.status['attack'] * Attack_Data[attack]['amount']
+
+	def update_xp(self, increase):
+		if self.level_up  > increase+self.xp:
+			self.xp += increase
+			return False
+		else:
+			self.level += 1
+			self.xp = increase - (self.level_up - self.xp)
+			self.level_up = self.level * 150
+			return True
+
+
+	def update(self, dt):
+		self.current_health = max(0, min(self.current_health, self.status['max_health']))
+		self.current_energy = max(0, min(self.current_energy
+		, self.status['max_energy']))
+		if not self.paused:
+			self.preparation += self.status['speed'] * dt
+			self.energy_timer.update()
+			

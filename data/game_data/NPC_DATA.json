@@ -1,0 +1,411 @@
+{
+  "o1": {
+    "monsters": {
+      "0": ["Jacana", 14],
+      "1": ["Cleaf", 15]
+    },
+    "dialog": {
+      "default": ["你好，训练师小子", "听说你获得了很多新的精灵", "想比试一下吗?"],
+      "defeated": ["你很厉害", "之后再切磋"]
+    },
+    "directions": ["down"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "o2": {
+    "monsters": {
+      "0": ["Atrox", 14],
+      "1": ["Pouch", 15],
+      "2": ["Draem", 13],
+      "3": ["Cindrill", 13]
+    },
+    "dialog": {
+      "default": ["我不喜欢沙滩", "因为我刚买的海景谷被海鸥叼走了", "什么？你居然不知道谷子是什么？", "开战吧！可恶的现充！"],
+      "defeated": ["等我拿回我失去的谷子我就会强的可怕！"]
+    },
+    "directions": ["left", "down"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "o3": {
+    "monsters": {
+      "0": ["Atrox", 14],
+      "1": ["Pouch", 15],
+      "2": ["Draem", 13],
+      "3": ["Cindrill", 13]
+    },
+    "dialog": {
+      "default": ["我喜欢户外运动!", "在野外也能捉到很多精灵", "打一架吧!"],
+      "defeated": ["希望你面对Boss时也能这么顺利", "那里的气候很恶劣..."]
+    },
+    "directions": ["left", "right", "up", "down"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "o4": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love skating!", "FIGHT!"],
+      "defeated": ["Good luck with the boss", "It's so cold in here"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "o5": {
+    "monsters": {
+      "0": ["Plumette", 20],
+      "1": ["Ivieron", 22],
+      "2": ["Atrox", 24],
+      "3": ["Pouch", 19]
+    },
+    "dialog": {
+      "default": ["So you want to challenge the big ones", "This will be fun!"],
+      "defeated": ["I hope the lawyers will never spot you", "<3"]
+    },
+    "directions": ["up", "right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "o6": {
+    "monsters": {
+      "0": ["Finsta", 15],
+      "1": ["Finsta", 15],
+      "2": ["Finsta", 15]
+    },
+    "dialog": {
+      "default": ["I love skating!", "FIGHT!"],
+      "defeated": ["Good luck with the boss", "It's so cold in here"]
+    },
+    "directions": ["down"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "o7": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["There are no bugs in the snow!"],
+      "defeated": ["Maybe I should check a vulcano...", "It's so cold in here"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "p1": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love trees", "and fights"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "p2": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love trees", "and fights"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "p3": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love trees", "and fights"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "p4": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love trees", "and fights"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "px": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Atrox", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I love trees", "and fights"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "forest"
+  },
+  "w1": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["It's so cold in here", "maybe a fight will warm me up"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["left"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "w2": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["It's so cold in here", "maybe a fight will warm me up"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "w3": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["It's so cold in here", "maybe a fight will warm me up"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "w4": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["It's so cold in here", "maybe a fight will warm me up"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["left"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "w5": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["It's so cold in here", "maybe a fight will warm me up"],
+      "defeated": ["Good luck with the boss!"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "wx": {
+    "monsters": {
+      "0": ["Friolera", 25],
+      "1": ["Gulfin", 20],
+      "2": ["Draem", 24],
+      "3": ["Finiette", 30]
+    },
+    "dialog": {
+      "default": ["I hope you brought rations", "This will be a long journey"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["down"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "ice"
+  },
+  "f1": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "f2": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["right", "left"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "f3": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["right", "left"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "f4": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["up", "right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "f5": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["left"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "f6": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["This place feels kinda warm...", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["right"],
+    "look_around": true,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "fx": {
+    "monsters": {
+      "0": ["Cindrill", 15],
+      "1": ["Jacana", 20],
+      "2": ["Draem", 24],
+      "3": ["Atrox", 30]
+    },
+    "dialog": {
+      "default": ["Time to bring the heat", "fight!"],
+      "defeated": ["Congratultion!"]
+    },
+    "directions": ["down"],
+    "look_around": false,
+    "defeated": false,
+    "biome": "sand"
+  },
+  "Nurse": {
+    "direction": "down",
+    "radius": 0,
+    "look_around": false,
+    "dialog": {
+      "default": ["欢迎来到医院", "你的精灵已经完全恢复了"],
+      "defeated": null
+    },
+    "directions": ["down"],
+    "defeated": false,
+    "biome": null
+  }
+}

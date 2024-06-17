@@ -3,7 +3,7 @@
  <tileset firstgid="1" source="../tilesets/world.tsx"/>
  <tileset firstgid="211" source="../tilesets/objects.tsx"/>
  <tileset firstgid="242" source="../tilesets/Grass.tsx"/>
- <layer id="1" name="Terrain" width="86" height="86">
+ <layer id="1" name="Terrain" width="86" height="86" visible="0" locked="1">
   <data encoding="csv">
 195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,196,132,132,136,132,132,132,136,132,123,42,43,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,
 195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,196,132,132,147,126,132,132,136,132,132,123,54,33,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,
@@ -93,7 +93,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="13" name="Terrain Top" width="86" height="86">
+ <layer id="13" name="Terrain Top" width="86" height="86" visible="0" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -183,7 +183,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="3" name="Entities">
+ <objectgroup id="3" name="Entities" visible="0">
   <object id="12" name="Player" x="4223.94" y="3661.26">
    <properties>
     <property name="direction" value="down"/>
@@ -297,7 +297,7 @@
    <point/>
   </object>
  </objectgroup>
- <objectgroup id="9" name="Coast">
+ <objectgroup id="9" name="Coast" visible="0" locked="1">
   <object id="130" name="coast" x="4224" y="4992" width="64" height="64">
    <properties>
     <property name="side" value="top"/>
@@ -1715,7 +1715,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="6" name="Monsters">
+ <objectgroup id="6" name="Monsters" visible="0" locked="1">
   <object id="34" gid="242" x="4096" y="4096" width="64" height="64">
    <properties>
     <property name="biome" value="forest"/>
@@ -2294,7 +2294,7 @@
    <properties>
     <property name="biome" value="forest"/>
     <property name="level" type="int" value="10"/>
-    <property name="monsters" value="Atrox,Pouch"/>
+    <property name="monsters" value="Atrox,Plumette"/>
    </properties>
   </object>
   <object id="556" gid="242" x="3520" y="3328" width="64" height="64">
@@ -2364,7 +2364,7 @@
    <properties>
     <property name="biome" value="forest"/>
     <property name="level" type="int" value="10"/>
-    <property name="monsters" value="Atrox,Pouch"/>
+    <property name="monsters" value="Atrox,Plumette"/>
    </properties>
   </object>
   <object id="572" gid="242" x="3776" y="3264" width="64" height="64">
@@ -3155,7 +3155,7 @@
    <properties>
     <property name="biome" value="sand"/>
     <property name="level" type="int" value="10"/>
-    <property name="monsters" value="Atrox,Pouch"/>
+    <property name="monsters" value="Charmadillo"/>
    </properties>
   </object>
   <object id="998" gid="242" x="4480" y="2432" width="64" height="64">
@@ -3211,7 +3211,7 @@
    <properties>
     <property name="biome" value="ice"/>
     <property name="level" type="int" value="10"/>
-    <property name="monsters" value="Atrox,Pouch"/>
+    <property name="monsters" value="Atrox,Finsta"/>
    </properties>
   </object>
   <object id="1006" gid="243" x="2752" y="1024" width="64" height="64">
@@ -3694,7 +3694,7 @@
    <properties>
     <property name="biome" value="ice"/>
     <property name="level" type="int" value="10"/>
-    <property name="monsters" value="Atrox,Pouch"/>
+    <property name="monsters" value="Atrox,Finsta"/>
    </properties>
   </object>
   <object id="1115" gid="243" x="2560" y="1152" width="64" height="64">
@@ -3873,7 +3873,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="2" name="Objects">
+ <objectgroup id="2" name="Objects" visible="0">
   <object id="1" gid="211" x="4352" y="3776" width="320" height="320"/>
   <object id="2" gid="226" x="3455.33" y="3783.33" width="128" height="192"/>
   <object id="3" gid="226" x="3264" y="3712" width="128" height="192"/>
@@ -4052,9 +4052,6 @@
   <object id="644" gid="240" x="773.5" y="3742" width="60" height="60"/>
   <object id="645" gid="240" x="847.5" y="4291.5" width="60" height="60"/>
   <object id="646" gid="241" x="1728.5" y="4210.5" width="56" height="60"/>
-  <object id="647" gid="233" x="1271.83" y="4290.75" width="64" height="128"/>
-  <object id="648" gid="233" x="1418.83" y="4290.75" width="64" height="128"/>
-  <object id="649" name="top" gid="235" x="1261.83" y="4178.58" width="232" height="80"/>
   <object id="650" gid="241" x="2222" y="4051" width="56" height="60"/>
   <object id="651" gid="241" x="1874" y="3496" width="56" height="60"/>
   <object id="652" gid="241" x="2546" y="3979" width="56" height="60"/>
@@ -4147,7 +4144,7 @@
   <object id="1078" gid="228" x="4623" y="2089" width="64" height="128"/>
   <object id="1079" gid="227" x="4678" y="2170" width="128" height="192"/>
  </objectgroup>
- <objectgroup id="12" name="Collisions">
+ <objectgroup id="12" name="Collisions" visible="0">
   <object id="211" x="4832.33" y="1976.5" width="33.3333" height="647.5"/>
   <object id="700" x="4857" y="1952" width="67.5" height="22.5"/>
   <object id="701" x="4899" y="1203" width="25" height="744"/>
@@ -4312,7 +4309,7 @@
   <object id="908" x="2048.75" y="4595.33" width="77" height="30.334"/>
   <object id="909" x="2113" y="4534.83" width="77" height="30.334"/>
   <object id="910" x="2179" y="4414.33" width="28" height="105.834"/>
-  <object id="911" x="1007" y="4386.08" width="822" height="36.834"/>
+  <object id="911" x="1007" y="4386.08" width="780" height="36.834"/>
   <object id="912" x="1794" y="4200.08" width="28" height="105.834"/>
   <object id="913" x="931" y="4224.08" width="28" height="105.834"/>
   <object id="914" x="962.5" y="4344.83" width="36" height="30.334"/>
@@ -4419,7 +4416,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup id="10" name="Water">
+ <objectgroup id="10" name="Water" visible="0" locked="1">
   <object id="136" x="0" y="5056" width="5504" height="320"/>
   <object id="161" x="3648" y="2496" width="192" height="192"/>
   <object id="162" x="3840" y="2560" width="512" height="128"/>

@@ -1,249 +1,260 @@
-from monster import *
-
+from data_set import *
+from data_import import *
 
 class BelowDisplay:
-    def __init__(self, fonts):
+    def __init__(self):
         self.display_surf = pygame.display.get_surface()
-        self.fonts = fonts
+  
 
         # tint surf
-        self.tint_surf = pygame.Surface((WINDOW_WIDTH, 30))
+        self.tint_surf = pygame.Surface((1280, 30))
         self.tint_surf.fill((255, 255, 255))
 
-        self.font = fonts['regular']
+        self.font = Fonts['regular']
         self.text_color = COLORS['black']
-        self.fontpos = (WINDOW_WIDTH - 150, WINDOW_HEIGHT - 30)
+        self.fontpos = (1280 - 150, 720 - 30)
+
+
 
     def update(self, monster_display_open=False):
-        self.display_surf.blit(self.tint_surf, (0, WINDOW_HEIGHT - 30))
+        self.display_surf.blit(self.tint_surf, (0, 720 - 30))
         if monster_display_open:
             self.text = "SPACE-交换精灵顺序   ENTER-返回"
-            self.fontpos = (WINDOW_WIDTH - 320, WINDOW_HEIGHT - 30)
+            self.fontpos = (1280 - 320, 720 - 30)
         else:
             self.text = "SPACE-进入对话  ENTER-进入面板"
-            self.fontpos = (WINDOW_WIDTH - 300, WINDOW_HEIGHT - 30)
+            self.fontpos = (1280 - 300, 720 - 30)
 
         self.text_surface = self.font.render(self.text, True, self.text_color)
         self.display_surf.blit(self.text_surface, self.fontpos)
 
 
 class MonsterDisplay:
-    def __init__(self, monsters, fonts, monster_frames):
-        self.display_surf = pygame.display.get_surface()
-        self.fonts = fonts
-        self.monsters = monsters
-        self.frame_index = 0
+	def __init__(self, monsters, monster_frames):
+		self.display_surf = pygame.display.get_surface()
+		self.monsters = monsters
+		self.frame_index = 0
 
-        # frames
-        self.icon_frames = monster_frames['icons']
-        self.monster_frames = monster_frames['monsters']
-        self.ui_frames = monster_frames['ui']
+		# 图像
+		self.icon_frames = monster_frames['icons']
+		self.monster_frames = monster_frames['monsters']
+		self.ui_frames = monster_frames['ui']
 
-        # tint surf
-        self.tint_surf = pygame.Surface((WINDOW_WIDTH, WINDOW_HEIGHT))
-        self.tint_surf.set_alpha(200)
+		# 背景的带透明度的表面 
+		self.tint_surf = pygame.Surface((1280, 720))
+		self.tint_surf.set_alpha(200)
 
-        # dimensions
-        self.main_rect = pygame.FRect(0, 0, WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.8).move_to(
-            center=(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2))
+		# 中间有内容部分
+		self.main_rect = pygame.FRect(0,0,1280 * 0.6,720 * 0.8).move_to(center = (1280 / 2, 720 / 2))
 
-        # list
-        self.visible_items = 6
-        self.list_width = self.main_rect.width * 0.3
-        self.item_height = self.main_rect.height / self.visible_items
-        self.index = 0
-        self.selected_index = None
+		# 列表选择
+		self.visible_items = 6
+		self.list_width = self.main_rect.width * 0.3
+		self.item_height = self.main_rect.height / self.visible_items
+		self.index = 0
+		self.selected_index = None
 
-        # max values
-        self.max_stats = {}
-        for data in Monster_Data.values():
-            for stat, value in data['stats'].items():
-                if stat != 'element':
-                    if stat not in self.max_stats:
-                        self.max_stats[stat] = value
-                    else:
-                        self.max_stats[stat] = value if value > self.max_stats[stat] else self.max_stats[stat]
+		# 最大值参考
+		self.max_stats = {}
+		for data in Monster_Data.values():
+			for stat, value in data['stats'].items():
+				if stat != 'element':
+					if stat not in self.max_stats:
+						self.max_stats[stat] = value
+					else:
+						self.max_stats[stat] = value if value > self.max_stats[stat] else self.max_stats[stat]
 
-        self.max_stats['health'] = self.max_stats.pop('max_health')
-        self.max_stats['energy'] = self.max_stats.pop('max_energy')
 
-    def input(self):
-        keys = pygame.key.get_just_pressed()
-        if keys[pygame.K_UP]:
-            self.index -= 1
-        if keys[pygame.K_DOWN]:
-            self.index += 1
-        if keys[pygame.K_SPACE]:
-            if self.selected_index != None:
-                selected_monster = self.monsters[self.selected_index]
-                current_monster = self.monsters[self.index]
-                self.monsters[self.index] = selected_monster
-                self.monsters[self.selected_index] = current_monster
-                self.selected_index = None
-            else:
-                self.selected_index = self.index
+	def input(self):
+		keys = pygame.key.get_just_pressed()
+		if keys[pygame.K_UP]:
+			self.index -= 1
+		if keys[pygame.K_DOWN]:
+			self.index += 1
+		if keys[pygame.K_SPACE]:
+			if self.selected_index != None:
+				selected_monster = self.monsters[self.selected_index]
+				current_monster  = self.monsters[self.index]
+				self.monsters[self.index] = selected_monster
+				self.monsters[self.selected_index] = current_monster
+				self.selected_index = None
+			else:
+				self.selected_index = self.index
 
-        self.index = self.index % len(self.monsters)
+		self.index = self.index % len(self.monsters)
 
-    def display_list(self):
-        v_offset = 0 if self.index < self.visible_items else -(self.index - self.visible_items + 1) * self.item_height
-        for index, monster in self.monsters.items():
-            bg_color = COLORS['light'] if self.index != index else COLORS['light-blue']
+	# 在游戏的显示表面上绘制文本
+	def draw_surf(self, text, base, position, pos, font=Fonts['bold'], color=COLORS['white'], relative=None):
+		if isinstance(font, tuple):
+			raise TypeError(f"Expected font to be a pygame.font.Font object, got {type(font)} instead.")
+		surf = font.render(str(text), False, color)
+		rect = self.calculate_rect(surf, base, position, pos, relative)
+		self.display_surf.blit(surf, rect)
+		return rect
 
-            text_color = COLORS['white'] if self.selected_index != index else COLORS['light-yellow']
+	# 矩形位置计算方法
+	def calculate_rect(self, surf, base, position, pos, relative):
+		positions = {
+			'topleft': base.topleft + vector(pos[0], pos[1]),
+			'bottomleft': base.topleft + vector(pos[0], pos[1]) if relative == 'topleft' else base.bottomleft + vector(
+				pos[0], pos[1]),
+			'bottomright': base.bottomright + vector(pos[0], pos[1]),
+			'midleft': base.topleft + vector(pos[0], pos[1]) if relative == 'topleft' else base.midleft + vector(pos[0],
+																												 pos[1])
+		}
+		return surf.get_frect(**{position: positions[position]})
 
-            top = self.main_rect.top + index * self.item_height + v_offset
-            item_rect = pygame.FRect(self.main_rect.left, top, self.list_width, self.item_height)
+	# 显示左侧怪兽列表
+	def display_list(self):
+		if self.index < self.visible_items:
+			v_offset = 0
+		else:
+			v_offset = -(self.index - self.visible_items + 1) * self.item_height
 
-            text_surf = self.fonts['monster_name'].render(monster.name, False, text_color)
-            text_rect = text_surf.get_frect(midleft=item_rect.midleft + vector(85, 0))
+		for index, monster in self.monsters.items():
+			if self.index == index:
+				bg_color = COLORS['light-blue']
+			else:
+				bg_color = COLORS['light']
 
-            icon_surf = self.icon_frames[monster.name]
-            icon_rect = icon_surf.get_frect(center=item_rect.midleft + vector(40, 0))
+			if self.selected_index == index:
+				text_color = COLORS['light-yellow']
+			else:
+				text_color = COLORS['white']
 
-            # 检测两个矩形是否相交
-            if item_rect.colliderect(self.main_rect):
-                pygame.draw.rect(self.display_surf, bg_color, item_rect)
-                self.display_surf.blit(text_surf, text_rect)
-                self.display_surf.blit(icon_surf, icon_rect)
+			top = self.main_rect.top + index * self.item_height + v_offset
+			item_rect = pygame.FRect(self.main_rect.left, top, self.list_width, self.item_height)
 
-    def display_main(self, dt):
-        # monster data
-        monster = self.monsters[self.index]
 
-        # main bg
-        rect = pygame.FRect(self.main_rect.left + self.list_width, self.main_rect.top,
-                            self.main_rect.width - self.list_width + 5, self.main_rect.height)
+			# 检测两个矩形是否相交=>是否显示
+			if item_rect.colliderect(self.main_rect):
+				pygame.draw.rect(self.display_surf, bg_color, item_rect)
+				# text
+				self.draw_surf(monster.name, item_rect, 'midleft', (85, 0), Fonts['monster_name'],text_color)
 
-        pygame.draw.rect(self.display_surf, COLORS['gray'], rect)
+				icon_surf = self.icon_frames[monster.name]
+				icon_rect = icon_surf.get_frect(center=item_rect.midleft + vector(40, 0))
+				self.display_surf.blit(icon_surf, icon_rect)
 
-        # top part display
-        # 背景
-        top_rect = pygame.FRect(rect.topleft, (rect.width, rect.height * 0.4))
-        pygame.draw.rect(self.display_surf, COLORS[monster.element], top_rect)
 
-        # 动画
-        self.frame_index += ANIMATION_SPEED * dt
-        monster_surf = self.monster_frames[monster.name]['idle'][
-            int(self.frame_index) % len(self.monster_frames[monster.name]['idle'])]
+	def display_main(self, dt):
+		monster = self.monsters[self.index]
 
-        # 创建rect对象，其center值为背景的center值
-        monster_rect = monster_surf.get_frect(center=top_rect.center)
-        self.display_surf.blit(monster_surf, monster_rect)
+		# 总体部分背景
+		rect = pygame.FRect(self.main_rect.left + self.list_width, self.main_rect.top,
+							self.main_rect.width - self.list_width + 5, self.main_rect.height)
 
-        # 怪兽名字
-        name_surf = self.fonts['bold'].render(monster.name, False, COLORS['white'])
-        name_rect = name_surf.get_frect(topleft=top_rect.topleft + vector(10, 10))
-        self.display_surf.blit(name_surf, name_rect)
+		pygame.draw.rect(self.display_surf, COLORS['gray'], rect)
 
-        # 怪兽等级
-        level_surf = self.fonts['monster_name'].render(f'Lvl:{monster.level}', False, COLORS['white'])
-        level_rect = level_surf.get_frect(bottomleft=top_rect.bottomleft + vector(10, -15))
-        self.display_surf.blit(level_surf, level_rect)
+		# 上边部分
+		# 背景
+		top_rect = pygame.FRect(rect.topleft, (rect.width, rect.height * 0.4))
+		pygame.draw.rect(self.display_surf, COLORS[monster.element], top_rect)
 
-        # 等级经验
-        draw_bar(self.display_surf, pygame.FRect(level_rect.bottomleft + vector(-2, 3), (100, 4)), monster.xp,
-                 monster.level_up, COLORS['white'], COLORS['dark'])
+		# 动画
+		self.frame_index += 6* dt
+		monster_surf = self.monster_frames[monster.name]['idle'][
+			int(self.frame_index) % len(self.monster_frames[monster.name]['idle'])]
+		# 创建rect对象，其center值为背景的center值
+		monster_rect = monster_surf.get_frect(center=top_rect.center)
+		self.display_surf.blit(monster_surf, monster_rect)
 
-        # 怪兽属性
-        element_surf = self.fonts['monster_name'].render(monster.element, False, COLORS['white'])
-        element_rect = element_surf.get_frect(bottomright=top_rect.bottomright + vector(-10, -7))
-        self.display_surf.blit(element_surf, element_rect)
+		# 怪兽名字
+		self.draw_surf(monster.name, top_rect, 'topleft', (10,10))
+		# 怪兽等级
+		level_rect=self.draw_surf( f'Lv:{monster.level}', top_rect, 'bottomleft', (10, -15),Fonts['monster_name'])
+		# 怪兽属性
+		self.draw_surf(monster.element, top_rect, 'bottomright', (-10, -7),Fonts['monster_name'])
 
-        # main part
-        # 生命条
-        bar_data = {
-            'width': rect.width * 0.45,
-            'height': 30,
-            'top': top_rect.bottom + rect.width * 0.05,
-            'left_side': rect.left + rect.width / 4,
-            'right_side': rect.left + rect.width * 3 / 4
-        }
 
-        healthbar_rect = pygame.FRect((0, 0), (bar_data['width'], bar_data['height'])).move_to(
-            midtop=(bar_data['left_side'], bar_data['top']))
-        draw_bar(self.display_surf, healthbar_rect, monster.health, monster.get_stat('max_health'), COLORS['red'],
-                 COLORS['dark'])
+		# 等级经验
+		draw_bar(self.display_surf, pygame.FRect(level_rect.bottomleft + vector(-2, 3), (100, 4)), monster.xp,
+				 monster.level_up, COLORS['white'], COLORS['dark'])
 
-        hp_text = self.fonts['monster_name'].render(f"HP: {int(monster.health)}/{int(monster.get_stat('max_health'))}",
-                                                    False, COLORS['white'])
-        hp_rect = hp_text.get_frect(midleft=healthbar_rect.midleft + vector(10, 0))
-        self.display_surf.blit(hp_text, hp_rect)
 
-        # 能量条
-        energybar_rect = pygame.FRect((0, 0), (bar_data['width'], bar_data['height'])).move_to(
-            midtop=(bar_data['right_side'], bar_data['top']))
-        draw_bar(self.display_surf, energybar_rect, monster.energy, monster.get_stat('max_energy'), COLORS['blue'],
-                 COLORS['dark'])
+		# 下面部分
+		bar_data = {
+			'width': rect.width * 0.45,
+			'height': 30,
+			'top': top_rect.bottom + rect.width * 0.05,
+			'left_side': rect.left + rect.width / 4,
+			'right_side': rect.left + rect.width * 3 / 4
+		}
 
-        ep_text = self.fonts['monster_name'].render(f"EP: {int(monster.energy)}/{int(monster.get_stat('max_energy'))}",
-                                                    False, COLORS['white'])
-        ep_rect = ep_text.get_frect(midleft=energybar_rect.midleft + vector(10, 0))
-        self.display_surf.blit(ep_text, ep_rect)
+		# 生命条
+		healthbar_rect = pygame.FRect((0, 0), (bar_data['width'], bar_data['height'])).move_to(
+			midtop=(bar_data['left_side'], bar_data['top']))
+		draw_bar(self.display_surf, healthbar_rect, monster.current_health, monster.status['max_health'], COLORS['red'],
+				 COLORS['dark'])
 
-        # 状态和技能的信息
-        sides = {'left': healthbar_rect.left, 'right': energybar_rect.left}
-        info_height = rect.bottom - healthbar_rect.bottom
 
-        # 状态
-        stats_rect = pygame.FRect(sides['left'], healthbar_rect.bottom, healthbar_rect.width, info_height).inflate(0,
-                                                                                                                   -60).move(
-            0, 5)
+		hp_display_text=f"HP: {int(monster.current_health)}/{int(monster.status['max_health'])}"
+		self.draw_surf(hp_display_text, healthbar_rect, 'midleft', (10, 0), Fonts['monster_name'])
 
-        stats_text_surf = self.fonts['monster_name_large'].render('Stats', False, COLORS['white'])
-        stats_text_rect = stats_text_surf.get_frect(bottomleft=stats_rect.topleft)
-        self.display_surf.blit(stats_text_surf, stats_text_rect)
+		# 能量条
+		energybar_rect = pygame.FRect((0, 0), (bar_data['width'], bar_data['height'])).move_to(
+			midtop=(bar_data['right_side'], bar_data['top']))
+		draw_bar(self.display_surf, energybar_rect, monster.current_energy,  monster.status['max_energy'], COLORS['blue'],
+				 COLORS['dark'])
 
-        monster_stats = monster.get_stats()
-        stat_height = stats_rect.height / len(monster_stats)
+		ep_display_text = f"EP: {int(monster.current_energy)}/{int(monster.status['max_energy'])}"
+		self.draw_surf(ep_display_text, energybar_rect, 'midleft', (10, 0), Fonts['monster_name'])
 
-        for index, (stat, value) in enumerate(monster_stats.items()):
-            single_stat_rect = pygame.FRect(stats_rect.left, stats_rect.top + index * stat_height, stats_rect.width,
-                                            stat_height)
 
-            # icon
-            icon_surf = self.ui_frames[stat]
-            icon_rect = icon_surf.get_frect(midleft=single_stat_rect.midleft + vector(5, 0))
-            self.display_surf.blit(icon_surf, icon_rect)
+		# 状态和技能的信息
+		sides = {'left': healthbar_rect.left, 'right': energybar_rect.left}
+		info_height = rect.bottom - healthbar_rect.bottom
 
-            # text
-            text_surf = self.fonts['monster_name'].render(stat, False, COLORS['white'])
-            text_rect = text_surf.get_frect(topleft=icon_rect.topleft + vector(30, -12))
-            self.display_surf.blit(text_surf, text_rect)
+		# 状态
+		stats_rect = pygame.FRect(sides['left'], healthbar_rect.bottom, healthbar_rect.width, info_height).inflate(0,-60).move(0, 5)
 
-            # bar
-            bar_rect = pygame.FRect((text_rect.left, text_rect.bottom + 2),
-                                    (single_stat_rect.width - (text_rect.left - single_stat_rect.left) - 10, 4))
+		self.draw_surf('Status', stats_rect, 'bottomleft', (10, 0),  Fonts['monster_name_large'],COLORS['white'],'topleft')
 
-            draw_bar(self.display_surf, bar_rect, value, self.max_stats[stat] * monster.level, COLORS['white'],
-                     COLORS['dark'])
 
-            # 技能
-            ability_rect = stats_rect.copy().move_to(left=sides['right'])
+		stat_height = stats_rect.height / len(monster.status)
 
-            ability_text_surf = self.fonts['monster_name_large'].render('Ability', False, COLORS['white'])
-            ability_text_rect = ability_text_surf.get_frect(bottomleft=ability_rect.topleft)
-            self.display_surf.blit(ability_text_surf, ability_text_rect)
+		for index, (stat, value) in enumerate(monster.status.items()):
+			single_stat_rect = pygame.FRect(stats_rect.left, stats_rect.top + index * stat_height, stats_rect.width,
+											stat_height)
 
-            for index, ability in enumerate(monster.get_abilities()):
-                element = Attack_Data[ability]['element']
+			# 图标
+			icon_surf = self.ui_frames[stat]
+			icon_rect = icon_surf.get_frect(midleft=single_stat_rect.midleft + vector(5, 0))
+			self.display_surf.blit(icon_surf, icon_rect)
 
-                text_surf = self.fonts['monster_name'].render(ability, False, COLORS['black'])
+			# 文字
+			text_rect=self.draw_surf(stat, icon_rect, 'topleft', (30, -12), Fonts['monster_name'])
 
-                x = ability_rect.left + 5
-                y = 20 + ability_rect.top + index * (text_surf.get_height() + 20)
 
-                rect = text_surf.get_frect(topleft=(x, y))
-                pygame.draw.rect(self.display_surf, COLORS[element], rect.inflate(10, 10), 0, 4)
-                self.display_surf.blit(text_surf, rect)
+			# bar
+			bar_rect = pygame.FRect((text_rect.left, text_rect.bottom + 2),(single_stat_rect.width - (text_rect.left - single_stat_rect.left) - 10, 4))
 
-    def update(self, dt):
-        # input
-        self.input()
-        # display the main
-        self.display_surf.blit(self.tint_surf, (0, 0))
-        pygame.draw.rect(self.display_surf, '#f2f2f2', self.main_rect)
-        # display the list
-        self.display_list()
-        # display the main section
-        self.display_main(dt)
+			draw_bar(self.display_surf, bar_rect, value, self.max_stats[stat] * monster.level, COLORS['white'],
+					 COLORS['dark'])
+
+			# 技能
+			ability_rect = stats_rect.copy().move_to(left=sides['right'])
+
+			self.draw_surf('Ability', ability_rect, 'bottomleft', (0, 0), Fonts['monster_name_large'], COLORS['white'],'topleft')
+
+
+			for index, ability in enumerate(monster.get_abilities()):
+				element = Attack_Data[ability]['element']
+
+				text_surf = Fonts['monster_name'].render(ability, False, COLORS['black'])
+				x = ability_rect.left + 5
+				y = 20 + ability_rect.top + index * (text_surf.get_height() + 20)
+
+				rect = text_surf.get_frect(topleft=(x, y))
+				pygame.draw.rect(self.display_surf, COLORS[element], rect.inflate(10, 10), 0, 4)
+				self.display_surf.blit(text_surf, rect)
+
+	def update(self, dt):
+		# input
+		self.input()
+		
+		self.display_surf.blit(self.tint_surf, (0, 0))
+		pygame.draw.rect(self.display_surf, '#f2f2f2', self.main_rect)
+
+		self.display_list()
+		self.display_main(dt)
